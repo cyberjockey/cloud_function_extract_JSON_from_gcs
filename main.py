@@ -5,7 +5,7 @@ import os
 import re
 import json
 from io import StringIO
-
+from string import digits
 from google.cloud import bigquery
 
 GCP_PROJECT = os.environ.get('GCP_PROJECT')
@@ -19,16 +19,17 @@ def bigqueryImport(data, context):
     timeCreated = data['timeCreated']
 
     # check filename format - dataset_name/table_name.json
-    if not re.search('^[a-zA-Z_-]+:[a-zA-Z_-]+.json$', filename):
-        logging.error('Unrecognized filename format: %s' % (filename))
-        return
+    #if not re.search('^[a-zA-Z_-]+.[a-zA-Z_-]+.json$', filename):
+    #    logging.error('Unrecognized filename format: %s' % (filename))
+    #    return
     
     # need converter json to ndjson?
     # file_name_converted = [json.dumps(record) for record in json.loads(filename)]
     
 
     # parse filename
-    datasetname, tablename = filename.replace('.json', '').split(':')
+    remove_digits = str.maketrans('', '', digits)
+    datasetname, tablename = filename.replace('.json','').replace('-','').translate(remove_digits).split('.public.')
     table_id = '%s.%s.%s' % (GCP_PROJECT, datasetname, tablename)
 
     # log the receipt of the file
