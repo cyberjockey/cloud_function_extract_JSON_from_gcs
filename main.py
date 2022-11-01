@@ -29,7 +29,7 @@ def bigqueryImport(data, context):
 
     # parse filename
     remove_digits = str.maketrans('', '', digits)
-    datasetname, tablename = filename.replace('eustacio_','').replace('horus_','').replace('isis_','').replace('maat_','').replace('nun_','').replace('prunto_','').replace('sakkara_','').replace('sakkara_','').replace('tajet_','').replace('thoth_','').replace('valuto_','').replace('.json','').replace('-','').translate(remove_digits).split('.public.')
+    datasetname, tablename = filename.replace('eustacio_','').replace('horus_','').replace('isis_','').replace('maat_','').replace('nun_','').replace('prunto_','').replace('sparado_','').replace('sakkara_','').replace('tajet_','').replace('thoth_','').replace('valuto_','').replace('.json','').replace('-','').translate(remove_digits).split('.public.')
     table_id = '%s.%s.%s' % (GCP_PROJECT, datasetname, tablename)
 
     # log the receipt of the file
