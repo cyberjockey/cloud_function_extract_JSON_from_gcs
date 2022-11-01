@@ -29,7 +29,8 @@ def bigqueryImport(data, context):
 
     # parse filename
     remove_digits = str.maketrans('', '', digits)
-    datasetname, tablename = filename.replace('.json','').replace('-','').translate(remove_digits).split('.public.')
+    file_formatter = {'eustacio_':'','horus_':'','isis_':'','maat_':'','nun_':'','prunto_':'','sakkara_':'','sparado_':'','tajet_':'','thoth_':'','valuto_':'','.json':'','-':''}
+    datasetname, tablename = filename.replace(file_formatter).translate(remove_digits).split('.public.')
     table_id = '%s.%s.%s' % (GCP_PROJECT, datasetname, tablename)
 
     # log the receipt of the file
