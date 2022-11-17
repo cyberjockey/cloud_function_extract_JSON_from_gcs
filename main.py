@@ -4,6 +4,7 @@ import logging
 import os
 import re
 import json
+import requests
 from io import StringIO
 from string import digits
 from google.cloud import bigquery
@@ -72,3 +73,10 @@ def bigqueryImport(data, context):
         ))
     except Exception as e:
         logging.error('Failed to create load job: %s' % (e))
+        
+    #send data to n8n
+    
+    webhookurl = 'https://stupid-moose-83.hooks.n8n.cloud/webhook-test/53063239-7382-4677-b7da-2ba292f873d3'
+    data = { 'datasets' : dataset_ref }
+    r= requests.post(webhookurl, data=json.dumps(data), headers={'Content-Type': 'application/json'})
+    return r
